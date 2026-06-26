@@ -1,5 +1,11 @@
 # Confluent Kaftka TypeScript
 
+<!-- References -->
+
+## References
+
+- Shryansh Jain — Kaftka video series (reference implementation): https://youtube.com/playlist?list=PL6W8uoQQ2c62YCR2kkE-0tg3-y1QwaIWk
+
 A Docker-based Confluent Kafka setup with a TypeScript client wrapper built on `@confluentinc/kafka-javascript`.
 
 ## Overview
