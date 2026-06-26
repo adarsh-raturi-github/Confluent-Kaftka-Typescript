@@ -1,0 +1,167 @@
+services:
+  controller1:
+    image: apache/kafka:4.3.0
+    container_name: controller1
+    hostname: controller1
+
+    ports:
+      - "9093:9093"
+
+    environment:
+      # KRaft Cluster ID (must be same for all controllers and brokers)
+      CLUSTER_ID: MkU3OEVBNTcwNTJENDM2Qk
+
+      # Unique node ID
+      KAFKA_NODE_ID: 1
+
+      # This node acts only as a Controller
+      KAFKA_PROCESS_ROLES: controller
+
+      # Open Controller listener on port 9093
+      KAFKA_LISTENERS: CONTROLLER://:9093
+
+      # Controller communication uses CONTROLLER listener
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+
+      # Controller Quorum
+      # Since we only have one controller for now
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@controller1:9093,2@controller2:9094
+
+      # Communication protocol betwwen controllers
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT
+
+      # Metadata Log Location
+      KAFKA_LOG_DIRS: /tmp/controller1-logs
+
+      # Default Topic Configuration
+      KAFKA_NUM_PARTITIONS: 3
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 2
+
+  controller2:
+    image: apache/kafka:4.3.0
+    container_name: controller2
+    hostname: controller2
+
+    ports:
+      - "9094:9094"
+
+    environment:
+      # KRaft Cluster ID (must be same for all controllers and brokers)
+      CLUSTER_ID: MkU3OEVBNTcwNTJENDM2Qk
+
+      # Unique node ID
+      KAFKA_NODE_ID: 2
+
+      # This node acts only as a Controller
+      KAFKA_PROCESS_ROLES: controller
+
+      # Open Controller listener on port 9094
+      KAFKA_LISTENERS: CONTROLLER://:9094
+
+      # Controller communication uses CONTROLLER listener
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+
+      # Controller Quorum
+      # Since we only have one controller for now
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@controller1:9093,2@controller2:9094
+
+      # Communication protocol
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT
+
+      # Metadata Log Location
+      KAFKA_LOG_DIRS: /tmp/controller2-logs
+
+      # Default Topic Configuration
+      KAFKA_NUM_PARTITIONS: 3
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 2
+
+  broker1:
+    image: apache/kafka:4.3.0
+    container_name: broker1
+    hostname: broker1
+
+    depends_on:
+      - controller1
+      - controller2
+
+    ports:
+      - "9095:9095"
+
+    environment:
+      # Same Cluster ID used by all controllers and brokers
+      CLUSTER_ID: MkU3OEVBNTcwNTJENDM2Qk
+
+      # Unique Node ID
+      KAFKA_NODE_ID: 3
+
+      # This node acts only as a Broker
+      KAFKA_PROCESS_ROLES: broker
+
+      # Controller Quorum
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@controller1:9093,2@controller2:9094
+
+      # Broker Listener (Producer/Consumer connect here)
+      KAFKA_LISTENERS: BROKER://:9095
+
+      # Address stored in Controller Metadata used by producer/consumer
+      KAFKA_ADVERTISED_LISTENERS: BROKER://localhost:9095
+
+      # Listener used for Broker <-> Broker communication
+      KAFKA_INTER_BROKER_LISTENER_NAME: BROKER
+
+      # Listener used for Broker <-> Controller communication
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+
+      # Security Protocol Mapping
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,BROKER:PLAINTEXT
+
+      # Directory where Kafka stores partition data
+      KAFKA_LOG_DIRS: /tmp/broker1-logs
+
+      # Keep messages for 7 days
+      KAFKA_LOG_RETENTION_HOURS: 168
+
+      # Maximum size of a log segment (1 GB)
+      KAFKA_LOG_SEGMENT_BYTES: 1073741824
+
+      # Replication factor for __consumer_offsets topic
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 2
+
+  broker2:
+    image: apache/kafka:4.3.0
+    container_name: broker2
+    hostname: broker2
+
+    depends_on:
+      - controller1
+      - controller2
+
+    ports:
+      - "9096:9096"
+
+    environment:
+      CLUSTER_ID: MkU3OEVBNTcwNTJENDM2Qk
+
+      KAFKA_NODE_ID: 4
+
+      KAFKA_PROCESS_ROLES: broker
+
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@controller1:9093,2@controller2:9094
+
+      KAFKA_LISTENERS: BROKER://:9096
+
+      KAFKA_ADVERTISED_LISTENERS: BROKER://localhost:9096
+
+      KAFKA_INTER_BROKER_LISTENER_NAME: BROKER
+
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,BROKER:PLAINTEXT
+
+      KAFKA_LOG_DIRS: /tmp/broker2-logs
+
+      KAFKA_LOG_RETENTION_HOURS: 168
+
+      KAFKA_LOG_SEGMENT_BYTES: 1073741824
+
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 2
