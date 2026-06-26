@@ -8,6 +8,15 @@
 
 A Docker-based Confluent Kafka setup with a TypeScript client wrapper built on `@confluentinc/kafka-javascript`.
 
+## Get Involved
+
+If this project helped you, you can help the project grow:
+
+- 👀 Watch the repository to follow updates
+- 🐛 Open issues or submit pull requests — contributions are welcome
+
+Small actions like starring or sharing make a big difference for discoverability and help more developers find the TypeScript implementation.
+
 ## Overview
 
 This repository demonstrates a local Kafka development environment using Docker and Confluent's JavaScript client. It includes:
