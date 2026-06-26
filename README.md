@@ -1,1 +1,1 @@
-# Confluent-Kafka-Typescript
+# Confluent-Kaftka-Typescript
