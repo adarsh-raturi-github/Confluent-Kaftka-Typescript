@@ -123,5 +123,3 @@ flowchart TD
 
 - `Instruction.md` — full setup and installation instructions
 - `config-flow.md` — flow diagram and configuration explanation
-
-These documents are kept as separate files for easy navigation, but the core project README also contains the same setup and flow details in one place.
