@@ -1,21 +1,6 @@
 # Confluent Kaftka TypeScript
 
-<!-- References -->
-
-## References
-
-- Shryansh Jain — Kaftka video series (reference implementation): https://youtube.com/playlist?list=PL6W8uoQQ2c62YCR2kkE-0tg3-y1QwaIWk
-
 A Docker-based Confluent Kafka setup with a TypeScript client wrapper built on `@confluentinc/kafka-javascript`.
-
-## Get Involved
-
-If this project helped you, you can help the project grow:
-
-- 👀 Watch the repository to follow updates
-- 🐛 Open issues or submit pull requests — contributions are welcome
-
-Small actions like starring or sharing make a big difference for discoverability and help more developers find the TypeScript implementation.
 
 ## Overview
 
@@ -138,3 +123,18 @@ flowchart TD
 
 - `Instruction.md` — full setup and installation instructions
 - `config-flow.md` — flow diagram and configuration explanation
+
+## Get Involved
+
+If this project helped you, you can help the project grow:
+
+- 👀 Watch the repository to follow updates
+- 🐛 Open issues or submit pull requests — contributions are welcome
+
+Small actions like starring or sharing make a big difference for discoverability and help more developers find the TypeScript implementation.
+
+<!-- References -->
+
+## References
+
+- Shryansh Jain — Kaftka video series (reference implementation): https://youtube.com/playlist?list=PL6W8uoQQ2c62YCR2kkE-0tg3-y1QwaIWk
